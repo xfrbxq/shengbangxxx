@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title "后台管理详情页"
+	script(src="/js/jquery.min.js")
+	link(rel="stylesheet", href="/css/bootstrap.css")
+	link(rel="stylesheet", href="/css/index.css")
+	link(rel="stylesheet" href="/css/ind_min.css")
+body
+	.top
+		.left(style='margin:0 30%')
+			img(src="/images/bg.png")
+			h1.text-center 盛邦信息后台管理详情界面
+	h2.text-center
+		a.btn.btn-primary(href="/") 返回主页	
+	.container_ht_where
+		h3.text-center 文章管理
+		form(action="/houtai_dp" method="post" class="xiugai" onsubmit="return false")
+			.form-group
+				lable(for="title") 文章标题：
+				input.form-control.title(type="text" id="title" name="title" required="required" value=data.title)
+			.form-group
+				lable(for="author") 作者：
+				input.form-control(type="text" id="author" name="author" required="required" value=data.author)
+			.form-group
+				lable(for="content") 文章内容：
+				<textarea rows="5" name="content" class="form-control" required="required" name="content" id="content"> #{data.content}</textarea>
+			.form-group
+				lable(for="date") 日期：
+				input.form-control(type="date" name="date" id="date" required="required" value=data.date)
+			.form-group
+				lable(for="praise") 点赞：
+				input.form-control(type="number" name="praise" id="praise" required="required" value=data.praise)
+			input.btn.btn-primary(type="submit" value="修改文章")
+		h2 该文章的评论：
+		table.table.table-bordered.table-hover
+			thead
+				th 评论人名称：
+				th 评论的内容：
+				th 操作：
+			tbody.table-striped
+				each val,ind in data.comments
+					tr
+						td #{val.username}
+						td #{val.says}
+						td
+							input.btn.btn-danger(type="button",value="删除")
+		h2.text-center
+			input.btn.btn-primary(type="button",value="删除整篇文章" id="del_content")
+	script.
+		var biaoti=$("#title").val(); 
+		$(".xiugai").submit(function(){
+			var title=$("#title").val();
+			var author=$("#author").val();
+			var content=$("#content").val();
+			var date=$("#date").val();
+			var praise=$("#praise").val();
+			if(confirm("确定要修改吗？")){
+				$.ajax({
+					url:"/xiugai",
+					type:"post",
+					data:{biaoti:biaoti,title:title,author:author,content:content,date:date,praise:praise}
+				}).done(function(v){
+					alert(v)
+					window.location.reload();
+				})
+			}	
+		})
+		$(".table tbody").on("click",".btn",function(){
+			var index=$(this).parents("tr").index();
+			if(confirm("确定要删除吗？")){
+				$.ajax({
+					url:"/del",
+					type:"post",
+					data:{index:index,biaoti:biaoti}
+				}).done(function(v){
+					alert(v);
+					window.location.reload();
+				})
+			}
+		})
+		$("#del_content").click(function(){
+			if(confirm("确定要删除文章吗？")){
+				$.ajax({
+					url:"/del_content",
+					type:"post",
+					data:{biaoti:biaoti}
+				}).done(function(v){
+					alert(v)
+					location.href="/houtai";
+				})
+			}
+		})

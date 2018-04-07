@@ -1,0 +1,56 @@
+.tishi{
+	display: none;
+}
+.top{
+	height: 100px;
+}
+.left{
+	height: 75px;
+	margin-top: 13px; 
+	margin-left: 144px;
+}
+.left img{
+	width: 75px;
+	height: 75px;
+	vertical-align: middle;
+}
+.left,.left h1,img{
+	float: left;
+}
+.left h1{
+	margin: 0;
+	line-height: 75px;
+	color: #915a2e;
+	font-weight: bold;
+}
+.right p{
+	font:16px 宋体;
+	line-height: 100px;
+	color: #915a2e;
+	font-weight: bold;
+}
+.right{
+	float: right;
+	margin-right: 120px;
+}
+.right p{
+	float: left;
+	margin-right: 30px;
+}
+.nav{
+	background-image: url("../images/bg.jpg");
+	margin-bottom: 20px;
+}
+.nav p{
+	margin:0;
+}
+.nav a{
+	text-decoration: none;
+	font:24px 宋体;
+	color: #fff;
+	margin-left: 63px;
+	line-height: 60px;
+}
+/*.div{
+	width: 100%
+}*/

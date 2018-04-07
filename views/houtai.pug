@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title "后台管理"
+	script(src="/js/jquery.min.js")
+	link(rel="stylesheet", href="/css/bootstrap.css")
+	link(rel="stylesheet", href="/css/index.css")
+	link(rel="stylesheet" href="/css/ind_min.css")
+body
+	.top
+		.left(style='margin:0 32%')
+			img(src="/images/bg.png")
+			//- h1 秦皇岛盛邦升华大学生实训基地
+			h1.text-center 盛邦信息后台管理界面 
+	h2.text-center
+		a.btn.btn-primary(href="/content_insert") 添加文章
+		a.btn.btn-primary(href="/") 返回主页
+	table.table.table-bordered.table-hover
+		thead
+			th 文章名称
+			th 文章作者
+			th 文章日期
+			th 点赞数量
+			th 详细信息
+		tbody.table-striped
+			each val in data.newslist
+				tr
+					td.col-md-4 #{val.title}
+					td.col-md-2 #{val.author}
+					td.col-md-2 #{val.date}
+					td.col-md-2 #{val.praise}
+					td.td
+						a.btn.btn-danger(href='/houtai_where/'+val.title) 点击查看
+
+	

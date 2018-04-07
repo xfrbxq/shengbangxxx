@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title "后台管理详情页"
+	script(src="/js/jquery.min.js")
+	link(rel="stylesheet", href="/css/bootstrap.css")
+	link(rel="stylesheet", href="/css/index.css")
+	link(rel="stylesheet" href="/css/ind_min.css")
+body
+	.top
+		.left(style='margin:0 30%')
+			img(src="/images/bg.png")
+			h1.text-center 盛邦信息后台添加文章界面
+	.container_ht_where
+		h3.text-center 添加文章
+		form(action="/content_insert" method="post" class="content_insert" onsubmit="return false")
+			.form-group
+				lable(for="title") 文章标题：
+				input.form-control.title(type="text" id="title" name="title" required="required")
+			.form-group
+				lable(for="author") 作者：
+				input.form-control(type="text" id="author" name="author" required="required")
+			.form-group
+				lable(for="content") 文章内容：
+				<textarea rows="5" name="content" required="required" class="form-control" name="content" id="content"></textarea>
+			.form-group
+				lable(for="date") 日期：
+				input.form-control(type="date" name="date" id="date" required="required")
+			.form-group
+				lable(for="praise") 点赞：
+				input.form-control(type="number" name="praise" id="praise" required="required")
+			input.btn.btn-primary(type="submit" value="添加文章")
+			a.btn.btn-primary(href="/") 返回主页
+	script.
+		$(".content_insert").submit(function(){
+			var title=$("#title").val();
+			var author=$("#author").val();
+			var content=$("#content").val();
+			var date=$("#date").val();
+			var praise=$("#praise").val();
+			console.log(title,author,content,date,praise)
+			if(confirm("确定要添加，不再修改了吗？")){
+				$.ajax({
+					url:"/content_insert",
+					type:"post",
+					data:{title:title,author:author,content:content,date:date,praise:praise}
+				}).done(function(v){
+					alert(v)
+					if(confirm("是否跳转到首页查看？")){
+						location.href="/houtai";
+					}else{
+						window.location.reload();
+					}
+					
+				})
+			}	
+		})

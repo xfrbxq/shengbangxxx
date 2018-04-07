@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	.container
+		h3
+			span | 新闻资讯
+		ul.ul(style="list-style-type:square;")
+			each val in data.newslist
+				li
+					a(href="/where/"+val.title) #{val.title}	
+					span #{val.date}
+block footer	

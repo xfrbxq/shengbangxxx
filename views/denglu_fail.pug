@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title Document
+body
+	h1 用户名或密码输入有误 请从新输入
+	script.
+		var i=2;
+		function show(){
+			if(i<1){
+				window.history.back(-1); 
+			}
+			else{
+				i--
+			}
+		}
+		setInterval(show,1000);

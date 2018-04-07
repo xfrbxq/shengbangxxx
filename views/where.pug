@@ -1,0 +1,76 @@
+extends layout
+block content
+
+	.container
+			h3
+				span | 详情内容
+			h2.text-center #{data.title}
+			p.text-center 
+				span 发布日期：#{data.date} &nbsp;&nbsp;&nbsp;&nbsp;作者：#{data.author}
+			div.neirong!= data.content
+			//- script.
+			//- 	var str=$(".neirong").text();
+			//- 	console.log(str)
+			//- 	$(".neirong").html(str)
+	.article_footer
+		form(action="/insert" method="post" class="insert" onsubmit="return false")
+			.form-group
+				lable(for="username")
+				span 作者
+				input(type="text" id="username" name="username" required="required")
+			.form-group
+				lable(for="says")
+				span 内容
+				input(type="text" id="says" name="says" required="required")
+			button.btn(style="margin-left:20px;margin-right:20px;") 添加评论
+		input.input_1(type="button" value="点赞"+data.praise)
+		
+		.div
+				h3 全部评论
+				.pinglunqu
+					each val in data.comments
+						p.username #{val.username}
+						p.pinglun
+							span #{val.says}
+		script.
+			var biaoti=$(".container h2").text();
+			//- 评论
+			$(".insert").submit(function(){
+			var username=$("#username").val();
+			var says=$("#says").val();
+				$.ajax({
+					url:"/insert",
+					type:"post",
+					data:{biaoti:biaoti,username:username,says:says}
+				}).done(function(val){
+					console.log(val)
+					$(".pinglunqu").empty()
+					for(var i=0;i<val.length;i++){
+						$p=$("<p class='username'>");
+						$p1=$("<p class='pinglun'>");
+						$span=$("<span>")
+						$p.text(val[i].username);
+						$span.text(val[i].says);
+						$p1.append($span);
+						$(".pinglunqu").append($p);
+						$(".pinglunqu").append($p1);
+					}
+				})
+			})
+			//- 点赞
+			var biaoti=$(".container h2").text(); 
+			var zan=parseInt( #{data.praise})
+			$(".input_1").click(function(){
+				zan+=1;
+				$.ajax({
+					url:"/praise",
+					type:"post",
+					data:{praise:zan,biaoti:biaoti},
+				}).done(function(val){
+					$(".input_1").val("点赞"+val)
+				})
+			})
+
+block footer
+
+
